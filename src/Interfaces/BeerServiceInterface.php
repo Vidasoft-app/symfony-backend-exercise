@@ -1,6 +1,6 @@
 <?php
 
-interface BeerInterface {
+interface BeerServiceInterface {
 
     public function getBeersList();
     public function searchBeers($foodFilter);
