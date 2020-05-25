@@ -30,6 +30,6 @@ class BeerController extends AbstractController
      */
     public function show(int $id, BeerService $beerService)
     {
-        return new JsonResponse($beerService->searchBeers($id));
+        return new JsonResponse($beerService->getBeer($id));
     }
 }

@@ -20,17 +20,40 @@ class BeerService implements BeerServiceInterface
 
     public function getBeersList()
     {
-        $response = $this->httpClient->get('beers');
-        return json_decode($response->getBody(), true);
+        try {
+            $response = $this->httpClient->get('beers');
+            return json_decode($response->getBody(), true);
+
+        } catch (RequestException $e) {
+            return [];
+        } catch (\Exception $ex) {
+            return [];
+        }
     }
 
     public function searchBeers($foodFilter)
     {
-        return ["nombre" => $foodFilter];
+        try {
+            $response = $this->httpClient->get('beers?food='.$foodFilter);
+            return json_decode($response->getBody(), true);
+
+        } catch (RequestException $e) {
+            return [];
+        } catch (\Exception $ex) {
+            return [];
+        }
     }
 
     public function getBeer($idBeer)
     {
-        return ["id" => $idBeer];
+        try {
+            $response = $this->httpClient->get('beers/'.$idBeer);
+            return json_decode($response->getBody(), true);
+
+        } catch (RequestException $e) {
+            return [];
+        } catch (\Exception $ex) {
+            return [];
+        }
     }
 }
