@@ -1,5 +1,9 @@
 <?php
 
+namespace App\Services;
+
+use App\Interfaces\BeerServiceInterface;
+
 class BeerService implements BeerServiceInterface
 {
 
@@ -10,16 +14,16 @@ class BeerService implements BeerServiceInterface
 
     public function getBeersList()
     {
-        // TODO: Implement getBeersList() method.
+        return ["nombre" => "ejemplo 1"];
     }
 
     public function searchBeers($foodFilter)
     {
-        // TODO: Implement searchBeers() method.
+        return ["nombre" => $foodFilter];
     }
 
     public function getBeer($idBeer)
     {
-        // TODO: Implement getBeer() method.
+        return ["id" => $idBeer];
     }
 }
