@@ -55,11 +55,28 @@ class BeerService implements BeerServiceInterface
             $response = $this->httpClient->get('beers', [
                 'query' => ['food' => $foodFilter]
             ]);
-            return json_decode($response->getBody(), true);
+            if ($response->getBody()) {
+                $beersResponse = json_decode($response->getBody(), true);
+                $beerList = array();
 
+                for ($i = 0; $i < count($beersResponse); $i++) {
+                    $beer = [
+                        "id" => $beersResponse[$i]['id'],
+                        "nombre" => $beersResponse[$i]['name'],
+                        "descripcion" => $beersResponse[$i]['description'],
+                        "imagen" => $beersResponse[$i]['image_url'],
+                        "slogan" => $beersResponse[$i]['tagline'],
+                        "fecha_fabricacion" => $beersResponse[$i]['first_brewed']
+                    ];
+                    array_push($beerList, $beer);
+                }
+
+                return $beerList;
+            }
+            return [];
         } catch (RequestException $e) {
             return [];
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
             return [];
         }
     }
@@ -68,11 +85,14 @@ class BeerService implements BeerServiceInterface
     {
         try {
             $response = $this->httpClient->get('beers/'.$idBeer);
-            return json_decode($response->getBody(), true);
 
+            if ($response->getBody()) {
+                return json_decode($response->getBody());
+            }
+            return [];
         } catch (RequestException $e) {
             return [];
-        } catch (\Exception $ex) {
+        } catch (\Exception $e) {
             return [];
         }
     }
