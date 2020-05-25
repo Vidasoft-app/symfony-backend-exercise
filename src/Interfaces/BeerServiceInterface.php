@@ -2,8 +2,8 @@
 
 interface BeerInterface {
 
-    public function getList();
-    public function search($foodFilter);
-    public function get($idBeer);
+    public function getBeersList();
+    public function searchBeers($foodFilter);
+    public function getBeer($idBeer);
 
 }
