@@ -15,14 +15,32 @@ class BeerService implements BeerServiceInterface
     {
         $dotenv = new Dotenv();
         $dotenv->load('../.env');
-        $this->httpClient = new Client(['base_uri' => $_ENV['PUNK_DATA_URI']]);
+        $this->httpClient = new Client(['base_uri' => 'https://api.punkapi.com/v2/',
+                'headers' => [
+                    'Accept' => 'application/json'
+                ]]
+        );
     }
 
     public function getBeersList()
     {
         try {
             $response = $this->httpClient->get('beers');
-            return json_decode($response->getBody(), true);
+            if ($response->getBody()) {
+                $beersResponse = json_decode($response->getBody(), true);
+                $beerList = array();
+
+                for ($i = 0; $i < count($beersResponse); $i++) {
+                    $beer = [
+                        "id" => $beersResponse[$i]['id'],
+                        "nombre" => $beersResponse[$i]['name'],
+                        "descripcion" => $beersResponse[$i]['description']
+                    ];
+                    array_push($beerList, $beer);
+                }
+
+                return $beerList;
+            }
 
         } catch (RequestException $e) {
             return [];
@@ -34,7 +52,9 @@ class BeerService implements BeerServiceInterface
     public function searchBeers($foodFilter)
     {
         try {
-            $response = $this->httpClient->get('beers?food='.$foodFilter);
+            $response = $this->httpClient->get('beers', [
+                'query' => ['food' => $foodFilter]
+            ]);
             return json_decode($response->getBody(), true);
 
         } catch (RequestException $e) {
