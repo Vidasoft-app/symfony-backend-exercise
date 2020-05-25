@@ -19,6 +19,10 @@ class BeerController extends AbstractController
      */
     public function list(Request $request, BeerService $beerService)
     {
+        $search = $request->query->get('food');
+        if(!empty($search)) {
+            return new JsonResponse($beerService->searchBeers($search));
+        }
         return new JsonResponse($beerService->getBeersList());
     }
 
