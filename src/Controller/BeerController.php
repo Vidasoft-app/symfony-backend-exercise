@@ -12,7 +12,7 @@ class BeerController extends AbstractController
 {
 
     /**
-     * @Route("/beer", methods={"GET"}, name="list_beers")
+     * @Route("/beers", methods={"GET"}, name="list_beers")
      * @param Request $request
      * @param BeerService $beerService
      * @return object json
@@ -23,7 +23,7 @@ class BeerController extends AbstractController
     }
 
     /**
-     * @Route("/beer/{id}", methods={"GET"}, name="show_beer")
+     * @Route("/beers/{id}", methods={"GET"}, name="show_beer")
      * @param int $id
      * @param BeerService $beerService
      * @return object json
